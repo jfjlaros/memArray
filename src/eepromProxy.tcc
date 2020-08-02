@@ -1,5 +1,5 @@
-#ifndef EEPROM_PROXY_TCC_
-#define EEPROM_PROXY_TCC_
+#ifndef MEM_ARRAY_EEPROM_PROXY_TCC_
+#define MEM_ARRAY_EEPROM_PROXY_TCC_
 
 #include "eepromHelper.tcc"
 

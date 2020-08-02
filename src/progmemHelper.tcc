@@ -1,5 +1,5 @@
-#ifndef PROGMEM_HELPER_TCC_
-#define PROGMEM_HELPER_TCC_
+#ifndef MEM_ARRAY_PROGMEM_HELPER_TCC_
+#define MEM_ARRAY_PROGMEM_HELPER_TCC_
 
 #include <avr/pgmspace.h>
 

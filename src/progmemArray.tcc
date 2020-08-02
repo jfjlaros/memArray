@@ -1,5 +1,5 @@
-#ifndef PROGMEM_ARRAY_TCC_
-#define PROGMEM_ARRAY_TCC_
+#ifndef MEM_ARRAY_PROGMEM_ARRAY_TCC_
+#define MEM_ARRAY_PROGMEM_ARRAY_TCC_
 
 #include "progmemHelper.tcc"
 
