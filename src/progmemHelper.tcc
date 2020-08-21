@@ -12,7 +12,7 @@
  * \return Value at `offset`.
  */
 template <class T>
-T const PROGMEMRead(size_t offset) {
+T PROGMEMRead(size_t offset) {
   T data;
 
   for (uint8_t i = 0; i < sizeof(T); i++) {
@@ -21,5 +21,11 @@ T const PROGMEMRead(size_t offset) {
 
   return data;
 }
+
+/*!
+ * Writing to PROGMEM is not possible.
+ */
+template <class T>
+void PROGMEMWrite(size_t, T) {}
 
 #endif

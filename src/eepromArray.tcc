@@ -1,20 +1,17 @@
 #ifndef MEM_ARRAY_EEPROM_ARRAY_TCC_
 #define MEM_ARRAY_EEPROM_ARRAY_TCC_
 
-#include "eepromProxy.tcc"
+#include "memArray.tcc"
+#include "eepromHelper.tcc"
 
 /*!
  * Generic array interface to EEPROM.
  */
 template <class T>
-class EEPROMArray {
+class EEPROMArray : public MemArray<T> {
   public:
     EEPROMArray(void) {}
-    EEPROMArray(size_t);
-    EEPROMProxy<T> operator[](size_t);
-    size_t offsetAt(size_t);
-  private:
-    size_t _offset;
+    EEPROMArray(size_t, size_t=1, size_t* _=NULL);
 };
 
 
@@ -22,32 +19,11 @@ class EEPROMArray {
  * Create an array at location `offset`.
  *
  * \param offset Array location.
+ * \param dim Array dimensions.
+ * \param shape Array shape.
  */
 template <class T>
-EEPROMArray<T>::EEPROMArray(size_t offset) {
-  _offset = offset;
-}
-
-/*!
- * Get the location of array element `index`.
- *
- * \param index Element index.
- *
- * \return Location of array element `index`.
- */
-template <class T>
-size_t EEPROMArray<T>::offsetAt(size_t index) {
-  return _offset + sizeof(T) * index;
-}
-
-/*!
- * Access an element.
- *
- * \return Proxy for array element `index`.
- */
-template <class T>
-EEPROMProxy<T> EEPROMArray<T>::operator[](size_t index) {
-  return EEPROMProxy<T>(offsetAt(index));
-}
+EEPROMArray<T>::EEPROMArray(size_t offset, size_t dim, size_t* shape)
+    : MemArray<T>(EEPROMRead, EEPROMWrite, offset, dim, shape) {}
 
 #endif
