@@ -16,6 +16,7 @@ class MemArray {
   private:
     T (*_read)(size_t);
     void (*_write)(size_t, T);
+    size_t _elementSize;
     size_t _offset;
     size_t _dim;
     size_t* _shape;
@@ -40,6 +41,13 @@ MemArray<T>::MemArray(
   _offset = offset;
   _dim = dim;
   _shape = shape;
+
+  _elementSize = sizeof(T);
+  if (_dim) {
+    for (size_t i = 0; i < _dim - 1; i++) {
+      _elementSize *= _shape[i];
+    }
+  }
 }
 
 /*!
@@ -51,11 +59,11 @@ MemArray<T>::MemArray(
  */
 template <class T>
 size_t MemArray<T>::offsetAt(size_t index) {
-  return _offset + sizeof(T) * index;
+  return index * _elementSize + _offset;
 }
 
 /*!
- * Assign a value to an array element.
+ * Assign a value to an element.
  *
  * \param data Value.
  *
@@ -85,15 +93,7 @@ MemArray<T>::operator T(void) {
  */
 template <class T>
 MemArray<T> MemArray<T>::operator[](size_t index) {
-  size_t elements = 1;
-
-  for (uint8_t i = 0; i < _dim - 1; i++) {
-    elements *= _shape[i];
-  }
-
-  return MemArray<T>(
-    _read, _write,
-    index * elements * sizeof(T) + _offset, _dim - 1, &_shape[1]);
+  return MemArray<T>(_read, _write, offsetAt(index), _dim - 1, &_shape[1]);
 }
 
 #endif
